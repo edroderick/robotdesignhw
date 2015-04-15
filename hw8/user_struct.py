@@ -14,6 +14,6 @@ ref = rst.ROBOT_JOINT_REF()
 
 ref.position = 1
 ref.command = 1
-ref.pack()
+#ref.pack()
 
 sock.sendall(ref)

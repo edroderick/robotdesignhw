@@ -16,7 +16,6 @@ print 'Connected with ' + addr[0] + ':' + str(addr[1])
 
 position = 0
 speed = 0
-velocity = 0
 accel = 0
 gain = 0
 posdir = 0	
@@ -32,8 +31,8 @@ ref = rst.ROBOT_JOINT_REF()
 
 
 data = conn.recv(1000000)
-ref = struct.unpack(data)
-	'''
+ref = data
+'''
 	if (ref.command == 1):
 		position = ref.position
 		speed = ref.speed
@@ -52,7 +51,7 @@ ref = struct.unpack(data)
 		sock.send(pickle.dumps(ref))
 	else:
 		print 'invalid command'
-	'''
+'''
 print ref.command
 
 

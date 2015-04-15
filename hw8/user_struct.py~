@@ -14,5 +14,6 @@ ref = rst.ROBOT_JOINT_REF()
 
 ref.position = 1
 ref.command = 1
+#ref.pack()
 
-sock.sendall(pickle.dumps(ref))
+sock.send(pickle.dumps(ref))

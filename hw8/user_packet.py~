@@ -44,7 +44,7 @@ def setval(msg, val):
 
 while(True):
 	msgtype = input("Get (0) or Set(1)")
-	msgvar = input("enter variable(vel = 0001, acel = 0010): ")
+	msgvar = input("enter variable(vel = 0001, acel = 0010, etc): ")
 	if msgvar == 0001:
 		msg = vel
 	if msgvar == 0010:
