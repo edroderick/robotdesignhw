@@ -1,0 +1,76 @@
+import time
+import socket
+
+IP = "127.0.0.1"
+PORT = 5005
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP SEND
+sock.connect((IP, PORT))
+
+maxval = 1
+minval = 0
+
+getmsg = '0'
+setmsg = '1'
+
+vel = '0001'
+acel = '0010'
+pos = '0011'
+gain = '0100'
+maxaccel = '0101'
+maxvel = '0110'
+maxpos = '0111'
+torque = '1000'
+maxtorque = '1001'
+motID = '1010'
+
+def getval(msg):
+	packet = getmsg + msg
+	sock.send(packet)
+	print 'sent: ', packet
+	data = sock.recv(1024)
+	return int(data,2)
+
+
+def setval(msg, val):
+	if (val > maxval):
+		val = maxval
+	if (val < minval):
+		val = minval
+	value = val*15
+	packet = setmsg + msg + bin(value)
+	sock.send(packet)
+	
+
+while(True):
+	msgtype = input("Get (0) or Set(1)")
+	msgvar = input("enter variable(vel = 0001, acel = 0010, etc): ")
+	if msgvar == 0001:
+		msg = vel
+	if msgvar == 0010:
+		msg = acel
+	if msgvar == 0011:
+		msg = pos
+	if msgvar == 0100:
+		msg = gain
+	if msgvar == 0101:
+		msg = maxaccel
+	if msgvar == 0111:
+		msg = maxvel
+	if msgvar = 0111:
+		msg = maxpos
+	if msgvar = 1000:
+		msg = torque
+	if msgvar = 1001:
+		msg = maxtorque
+	if msgvar = 1010
+		msg = motID
+
+	if (msgtype == 0):
+		print "received: ", getval(msg)
+	if (msgtype == 1):
+		msgvalue = input("enter value: ")
+		setval(msg,msgvalue)
+	time.sleep(.01)
+
+

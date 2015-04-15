@@ -1,0 +1,80 @@
+import time
+import socket
+
+IP = "127.0.0.1"
+PORT = 5005
+
+velocity = 0
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP Receive
+sock.bind((IP, PORT))    
+sock.listen(10)
+print 'listening'
+conn, addr = sock.accept()
+print 'Connected with ' + addr[0] + ':' + str(addr[1])
+
+
+velocity = 0
+acceleration = 0
+position = 0
+gain = 0
+maxaccel = 0
+maxvel = 0
+maxpos = 0
+torque = 0
+maxtorque = 0
+motID = 0
+
+while(True):
+	a = conn.recv(1024)
+	print "received: " , a
+
+	#set
+	if (a[0] == '1'):
+		if (a[1:5] == '0001'):
+			velocity = int(a[5:],2)
+		if (a[1:5] == '0010'):
+			acceleration = int(a[5:],2)
+		if (a[1:5] == '0011'):
+			position = int(a[5:],2)
+		if (a[1:5] == '0100'):
+			gain = int(a[5:],2)
+		if (a[1:5] == '0101'):
+			maxaccel = int(a[5:],2)
+		if (a[1:5] == '0110'):
+			maxvel = int(a[5:],2)
+		if (a[1:5] == '0111'):
+			maxpos = int(a[5:],2)
+		if (a[1:5] == '1000'):
+			torque = int(a[5:],2)
+		if (a[1:5] == '1001'):
+			maxtorque = int(a[5:],2)
+		if (a[1:5] == '1010'):
+			motID = int(a[5:],2)
+
+	#get
+	if (a[0] == '0'):
+		if (a[1:5] == '0001'):
+			conn.send(bin(velocity))
+		if (a[1:5] == '0010'):
+			sock.send(bin(acceleration))
+		if (a[1:5] == '0011'):
+			sock.send(bin(position))
+		if (a[1:5] == '0100'):
+			sock.send(bin(gain))
+		if (a[1:5] == '0101'):
+			sock.send(bin(maxaccel))
+		if (a[1:5] == '0110'):
+			sock.send(bin(maxvel))
+		if (a[1:5] == '0111'):
+			sock.send(bin(maxpos))
+		if (a[1:5] == '1000'):
+			sock.send(bin(torque))
+		if (a[1:5] == '1001'):
+			sock.send(bin(maxtorque))
+		if (a[1:5] == '1010'):
+			sock.send(bin(motID))
+
+	time.sleep(.01)
+
+
