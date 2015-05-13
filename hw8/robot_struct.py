@@ -30,9 +30,9 @@ command = 2
 ref = rst.ROBOT_JOINT_REF()
 
 
-data = conn.recv(1000000)
-ref = data
-'''
+ref = conn.recv(sizeof(rst))
+
+
 	if (ref.command == 1):
 		position = ref.position
 		speed = ref.speed
@@ -51,7 +51,7 @@ ref = data
 		sock.send(pickle.dumps(ref))
 	else:
 		print 'invalid command'
-'''
+
 print ref.command
 
 
